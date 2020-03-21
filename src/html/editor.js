@@ -51,7 +51,7 @@ const editorHTML = `
     <title>CN-Editor</title>
 </head>
 <body>
-  <div id="editor" contenteditable placeholder="Div placeholder..." oninput="if(this.innerHTML.trim()==='<br>')this.innerHTML=''" ></div>
+  <div id="editor" contenteditable oninput="if(this.innerHTML.trim()==='<br>')this.innerHTML=''" ></div>
     <script>
         (function(doc) {
             var editor = document.getElementById('editor');
@@ -175,7 +175,7 @@ const editorHTML = `
                         document.execCommand('backColor', false, value);
                         break;
                         case 'image':
-                        var img = "<img src='" + value.url + "' id='" + value.id + "' width='" + Math.round(value.width) + "' height='" + Math.round(value.height) + "' alt='" + value.alt + "' />";
+                        var img = "<img src='" + value.url + "' id='" + value.id + "' width='" + Math.round(value.width) + "' height='" + Math.round(value.height) + "' alt='" + value.alt + "' /><br>";
                          if(document.all) {
                              var range = editor.selection.createRange();
                              range.pasteHTML(img);
@@ -203,6 +203,14 @@ const editorHTML = `
                 switch (msgData.command) {
                 case 'focus':
                   editor.focus();
+
+                  var range = document.createRange();
+                  range.selectNodeContents(editor);
+                  range.collapse(false);
+                  var sel = window.getSelection();
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+
                   break;
                 case 'blur':
                   editor.blur();
@@ -216,6 +224,15 @@ const editorHTML = `
                   break;
                 case 'setHtml':
                   editor.innerHTML = msgData.value;
+                  
+                  var range = document.createRange();
+                  range.selectNodeContents(editor);
+                  range.collapse(false);
+                  var sel = window.getSelection();
+                  sel.removeAllRanges();
+                  sel.addRange(range);
+                  range.select();
+                  
                   break;
                   case 'style':
                     editor.style.cssText = msgData.value;
