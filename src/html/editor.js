@@ -51,7 +51,7 @@ const editorHTML = `
     <title>CN-Editor</title>
 </head>
 <body>
-  <div id="editor" contenteditable oninput="if(this.innerHTML.trim()==='<br>')this.innerHTML=''" ></div>
+  <div id="editor" contenteditable oninput="if(this.innerHTML.trim()==='<br>')this.innerHTML=''" style="font-size:18px;font-family:'Roboto';color:#858585;letterSpacing:1px;fontWeight:'400';" ></div>
     <script>
         (function(doc) {
             var editor = document.getElementById('editor');
